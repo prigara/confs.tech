@@ -2,16 +2,18 @@
 /* eslint-disable no-console */
 
 import {getDuplicates} from './utils';
-import js2017 from '../../../../conferences/2017/javascript.json';
 import ruby2017 from '../../../../conferences/2017/ruby.json';
 import ux2017 from '../../../../conferences/2017/ux.json';
 import android2017 from '../../../../conferences/2017/android.json';
 import ios2017 from '../../../../conferences/2017/ios.json';
-import js2018 from '../../../../conferences/2018/javascript.json';
 import ruby2018 from '../../../../conferences/2018/ruby.json';
 import ux2018 from '../../../../conferences/2018/ux.json';
 import android2018 from '../../../../conferences/2018/android.json';
 import ios2018 from '../../../../conferences/2018/ios.json';
+
+const JS_BASE_URL = 'https://raw.githubusercontent.com/tech-conferences/confs.tech/master/conferences';
+const js2017 = `${JS_BASE_URL}/2017/javascript.json`;
+const js2018 = `${JS_BASE_URL}/2018/javascript.json`;
 
 const REQUIRED_KEYS = ['name', 'url', 'startDate', 'city', 'country'];
 const conferencesJSON = {
@@ -33,10 +35,10 @@ const conferencesJSON = {
 
 Object.keys(conferencesJSON).forEach((year) => {
   Object.keys(conferencesJSON[year]).forEach((stack) => {
-
     describe(`${stack} conferences in ${year}`, () => {
-      it('does not have duplicates', () => {
-        const duplicates = getDuplicates(conferencesJSON[year][stack]);
+      it('does not have duplicates', async () => {
+        const conference = await getConferences(conferencesJSON[year][stack]);
+        const duplicates = getDuplicates(conference);
 
         if (duplicates.length > 0) {
           console.log(`${stack} conferences ${year} duplicate`);
@@ -56,3 +58,14 @@ Object.keys(conferencesJSON).forEach((year) => {
     });
   });
 });
+
+function getConferences(conferenceLink) {
+  if (typeof conferenceLink === 'string') {
+    return fetch(conferenceLink)
+      .then((response) => response.json());
+  } else {
+    return new Promise((resolve) => {
+      resolve(conferenceLink);
+    });
+  }
+}
