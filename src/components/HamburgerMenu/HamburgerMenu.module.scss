@@ -1,0 +1,56 @@
+@import 'src/components/style/foundation/mixins';
+@import 'src/components/style/foundation/typography';
+@import 'src/components/style/foundation/colors';
+@import 'src/components/style/foundation/spacing';
+@import 'src/components/style/foundation/media-queries';
+
+.HamburgerMenu {
+  position: relative;
+  display: inline-block;
+}
+
+.HamburgerIcon {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: spacing(tight);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  height: 30px; // Adjust as needed
+  width: 30px; // Adjust as needed
+
+  span {
+    display: block;
+    height: 3px; // Adjust as needed
+    width: 100%;
+    background-color: color(text, base); // Or your desired icon color
+    border-radius: 3px; // Optional: for rounded corners
+    transition: all 0.3s ease-in-out;
+  }
+}
+
+.NavLinks {
+  position: absolute;
+  top: 100%; // Position below the icon
+  right: 0; // Align to the right
+  background-color: color(surface, base); // Or your desired background
+  border: 1px solid color(border, base); // Optional: for a border
+  border-radius: 4px; // Optional: for rounded corners
+  padding: spacing(base);
+  display: flex;
+  flex-direction: column;
+  min-width: 200px; // Adjust as needed
+  z-index: 1000; // Ensure it's above other content
+
+  a {
+    padding: spacing(tight) spacing(base);
+    text-decoration: none;
+    color: color(text, base); // Or your desired link color
+    display: block;
+
+    &:hover {
+      background-color: color(surface, muted); // Optional: hover effect
+    }
+  }
+}

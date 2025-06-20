@@ -20,6 +20,7 @@ import {
   ScrollToConference,
   SponsoredConference,
   GithubStar,
+  HamburgerMenu,
 } from 'src/components'
 import { TOPICS } from 'src/components/config'
 import { SortBy, SortDirection } from 'types/global'
@@ -185,18 +186,6 @@ const ConferenceListPage: React.FC<Props> = ({
       >
         <Configure hitsPerPage={hitsPerPage} filters={algoliaFilter} />
         <div className={styles.RefinementsWrapper}>
-          <p className={styles.HeaderLinks}>
-            {(showPast || showCFP) && <Link url='/'>Upcoming conferences</Link>}
-            {!showCFP && <Link url='/cfp'>Call for Papers</Link>}
-            {!showPast && <Link url='/past'>Past conferences</Link>}
-            <Link url='/pages/sponsorships' routed>
-              Sponsor
-            </Link>
-            <Link url='/conferences/new' routed>
-              Add a conference
-            </Link>
-            <GithubStar />
-          </p>
           <Search />
           <RefinementList
             limit={40}
@@ -206,6 +195,7 @@ const ConferenceListPage: React.FC<Props> = ({
             )}
             transformItems={transformTopicRefinements}
           />
+        <HamburgerMenu showCFP={showCFP} showPast={showPast} />
           <RefinementList
             attribute='continent'
             transformItems={transformCountryRefinements}
@@ -233,6 +223,7 @@ const ConferenceListPage: React.FC<Props> = ({
               defaultRefinement={searchState.toggle.offersSignLanguageOrCC}
             />
           </div>
+
 
           <SponsoredConference />
 
